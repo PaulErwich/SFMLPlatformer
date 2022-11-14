@@ -1,0 +1,49 @@
+Platformer movement Pseudocode
+
+
+gameplay()
+	Sprite sprite
+	Vector2 movement
+	bool on_ground
+	Gameobjects platform[]
+	
+keyPress(event)
+	if event is D:
+		movement.x = 5
+	if event is A:
+		movement.x = -5
+
+	if event is SPACE and on_ground:
+		movement.y = -5
+	
+keyRelease(event)
+	if event is D:
+		movement.x = 0;
+	if event is A:
+		movement.x = 0;
+
+update(float dt)
+
+	for platform in array:
+		collision(sprite, platform)
+	
+	// Slowly adding to Y value creates a curved trajectory
+	// If also moving on the X axis
+	movement.y += 5 * dt
+
+	if on_ground:
+		movement.y = 0
+
+	move sprite (movement.x * dt * SPEED, movement.y * dt * SPEED)
+
+
+collision(sprite, platform)
+	if sprite hits top of platform:
+		sprite.y = platform.y + sprite.height
+		sprite.on_ground = true
+	if sprite hits left side of platform:
+		sprite.x = platform.x - sprite.width
+	if sprite hits right side of platform:
+		sprite.x = platform.x + platform.width
+	if sprite hits bottom of platform:
+		sprite.y = 2
